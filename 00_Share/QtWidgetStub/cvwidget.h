@@ -1,3 +1,6 @@
+// Copyright(C) 2018 Andrey Yaromenok, ayaromenok@gmail.com
+// MIT License - https://github.com/ayaromenok/OpenCVwithQt/blob/master/LICENSE
+
 #ifndef CVWIDGET_H
 #define CVWIDGET_H
 

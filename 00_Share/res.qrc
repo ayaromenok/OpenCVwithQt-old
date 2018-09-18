@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>data/len_full.jpg</file>
+        <file>data/len_part.jpg</file>
+    </qresource>
+</RCC>
