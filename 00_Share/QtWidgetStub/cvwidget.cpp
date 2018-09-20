@@ -17,7 +17,11 @@ CvWidget::CvWidget(QWidget *parent)
 {
     qDebug() << QDateTime::currentMSecsSinceEpoch() << "CvWidget::CvWidget()";
     setWindowTitle("Qt Widget for OpenCV");
-    CvRes::getImageRgb();
+    CvRes::imageRgb();
+    CvRes::imageRgbFull();
+    CvRes::imageRgbPart();
+    CvRes::imageRgbStereoLeft();
+    CvRes::imageRgbStereoRight();
     _numOfImagePlanes = 0;
 //    _vcLayouts = new QVector<QLayout*>;
 //    _vcLabels  = new QVector<QLabel*>;
