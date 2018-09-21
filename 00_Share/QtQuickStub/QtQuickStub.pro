@@ -14,7 +14,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    qcvobject.cpp
+    qcvobject.cpp \
+    ../share/cvres.cpp
 
 RESOURCES += qml.qrc \
     ../res.qrc
@@ -31,4 +32,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    qcvobject.h
+    qcvobject.h \
+    ../share/cvres.h

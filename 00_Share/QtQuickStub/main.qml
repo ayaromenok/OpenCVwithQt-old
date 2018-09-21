@@ -24,7 +24,7 @@ Window {
         columns:3
         QQ.Rectangle{
             color: "grey"
-            implicitHeight: 320
+            implicitHeight: 480
             implicitWidth: 256
             QQL.ColumnLayout{
                 QQC.Button{
@@ -35,13 +35,13 @@ Window {
                     sourceSize.width: 256
                     sourceSize.height: 256
                     fillMode: QQ.Image.PreserveAspectFit
-                    source: "data/len_part.jpg"
+                    source: "file:./imageRgb.png"
                 }
             }
         }
         QQ.Rectangle{
             color: "lightgrey"
-            implicitHeight: 320
+            implicitHeight: 480
             implicitWidth: 256
             QQL.ColumnLayout{
                 QQC.Button{
@@ -52,13 +52,13 @@ Window {
                     sourceSize.width: 256
                     sourceSize.height: 256
                     fillMode: QQ.Image.PreserveAspectFit
-                    source: "data/len_part.jpg"
+                    source: "file:./imageRgbPart.png"
                 }
             }
         }
         QQ.Rectangle{
             color: "grey"
-            implicitHeight: 320
+            implicitHeight: 480
             implicitWidth: 256
             QQL.ColumnLayout{
                 QQC.Button{
@@ -69,7 +69,7 @@ Window {
                     sourceSize.width: 256
                     sourceSize.height: 256
                     fillMode: QQ.Image.PreserveAspectFit
-                    source: "data/len_part.jpg"
+                    source: "file:./imageRgb.png"
                 }
             }
         }
