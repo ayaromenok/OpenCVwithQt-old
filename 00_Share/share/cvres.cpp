@@ -15,13 +15,13 @@ CvRes::CvRes(QObject *parent) : QObject(parent)
 bool
 CvRes::imageRgb()
 {
-    return getImage(ImgType::RgbFull);
+    return getImage(ImgType::Rgb);
 }
 
 bool
 CvRes::imageRgbFull()
 {
-    return getImage(ImgType::RgbFull);
+    return getImage(ImgType::Rgb);
 }
 
 bool
@@ -50,12 +50,12 @@ CvRes::getImage(ImgType type)
              << "CvRes::getImage();";
 
     switch (type) {
-    case ImgType::RgbFull:{
-        result = getImage(":/data/len_full.jpg", "./imageRgbFull.jpg");
+    case ImgType::Rgb:{
+        result = getImage(":/data/len_full.png", "./imageRgb.png");
         break;
     }
     case ImgType::RgbPart:{
-        result = getImage(":/data/len_part.jpg", "./imageRgbPart.jpg");
+        result = getImage(":/data/len_part.png", "./imageRgbPart.png");
         break;
     }
     case ImgType::RgbStereoLeft:{

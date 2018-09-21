@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>data/len_full.jpg</file>
-        <file>data/len_part.jpg</file>
         <file>data/640x480x24Left.png</file>
         <file>data/640x480x24Right.png</file>
+        <file>data/len_full.png</file>
+        <file>data/len_part.png</file>
     </qresource>
 </RCC>

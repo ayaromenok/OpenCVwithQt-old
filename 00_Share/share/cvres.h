@@ -9,7 +9,7 @@
 class CvRes : public QObject
 {
     Q_OBJECT
-enum class ImgType {RgbFull, RgbPart, RgbStereoLeft, RgbStereoRight, Unknown};
+enum class ImgType {Rgb, RgbPart, RgbStereoLeft, RgbStereoRight, Unknown};
 public:
     explicit CvRes(QObject *parent = nullptr);
     static bool imageRgb();
