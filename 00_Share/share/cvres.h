@@ -9,15 +9,21 @@
 class CvRes : public QObject
 {
     Q_OBJECT
+enum class ImgType {Rgb, RgbPart, RgbStereoLeft, RgbStereoRight, Unknown};
 public:
     explicit CvRes(QObject *parent = nullptr);
-    static bool getImageRgb();
+    static bool imageRgb();
+    static bool imageRgbFull();
+    static bool imageRgbPart();
+    static bool imageRgbStereoLeft();
+    static bool imageRgbStereoRight();
 
 signals:
 
 public slots:
 private:
-
+    static bool getImage(ImgType type);
+    static bool getImage(QString inName, QString outName);
 };
 
 #endif // CVRES_H

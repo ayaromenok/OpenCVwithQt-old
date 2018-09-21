@@ -17,7 +17,11 @@ CvWidget::CvWidget(QWidget *parent)
 {
     qDebug() << QDateTime::currentMSecsSinceEpoch() << "CvWidget::CvWidget()";
     setWindowTitle("Qt Widget for OpenCV");
-    CvRes::getImageRgb();
+    CvRes::imageRgb();
+    CvRes::imageRgbFull();
+    CvRes::imageRgbPart();
+    CvRes::imageRgbStereoLeft();
+    CvRes::imageRgbStereoRight();
     _numOfImagePlanes = 0;
 //    _vcLayouts = new QVector<QLayout*>;
 //    _vcLabels  = new QVector<QLabel*>;
@@ -49,7 +53,7 @@ CvWidget::appendImagePlane(Qt::Orientation orient)
     QLabel*      lbTwo = new QLabel("label two: #"
                                     + QString::number(_numOfImagePlanes));
     QLabel*      lbImg = new QLabel("image");
-    QPixmap    pixmap(":/data/len_part.jpg");
+    QPixmap    pixmap("./imageRgb.png");
 
     lbImg->setPixmap(pixmap);
 

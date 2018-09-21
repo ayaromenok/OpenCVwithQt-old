@@ -5,6 +5,7 @@
 #include <QQmlApplicationEngine>
 #include <QDebug>
 #include <QDateTime>
+#include "../share/cvres.h"
 #include "qcvobject.h"
 
 int main(int argc, char *argv[])
@@ -14,6 +15,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
+
+    CvRes::imageRgb();
+    CvRes::imageRgbFull();
+    CvRes::imageRgbPart();
+    CvRes::imageRgbStereoLeft();
+    CvRes::imageRgbStereoRight();
 
     QCvObject cvo;
     qmlRegisterType<QCvObject> ("CvObject", 1, 0, "CvObject");
