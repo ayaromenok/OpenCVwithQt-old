@@ -9,14 +9,14 @@ TEMPLATE = app
 
 CONFIG += c++11
 
+include(../share.pri)
+
 SOURCES += \
         main.cpp \
-        cvwidget.cpp \
-    ../share/cvres.cpp
+        cvwidget.cpp
 
 HEADERS += \
-        cvwidget.h \
-    ../share/cvres.h
+        cvwidget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

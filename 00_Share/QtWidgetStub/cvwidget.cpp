@@ -121,13 +121,18 @@ CvWidget::_appendCameraPlane(Qt::Orientation orient)
     _cam->setCaptureMode(QCamera::CaptureStillImage);
 
     _imgCap = new QCameraImageCapture(_cam);
-    //_imgCap->setCaptureDestination(QCameraImageCapture::CaptureToBuffer);
-    _imgCap->setCaptureDestination(QCameraImageCapture::CaptureToFile);//for OSX\iOS
-
-    connect(_imgCap, &QCameraImageCapture::imageAvailable,
-            this, &CvWidget::_imgToBuffer);
+#ifdef CAMERA_CAPTURE_VIA_FILE
+    //workaround for OSX\iOS
+    _imgCap->setCaptureDestination(QCameraImageCapture::CaptureToFile);
     connect(_imgCap, SIGNAL(imageSaved(int, const QString&)),
         this, SLOT(_imgToFile(int, const QString&)));
+#else //CAMERA_CAPTURE_VIA_FILE
+    _imgCap->setCaptureDestination(QCameraImageCapture::CaptureToBuffer);
+    connect(_imgCap, &QCameraImageCapture::imageAvailable,
+            this, &CvWidget::_imgToBuffer);
+#endif //CAMERA_CAPTURE_VIA_FILE
+
+
     connect(btnImgCapture, SIGNAL(pressed()),
             this, SLOT (_imgCapture()));
 
@@ -181,3 +186,4 @@ CvWidget::_imgToFile(int id, const QString &fName)
     _lbCamCap->setPixmap(QPixmap::fromImage(imgIn.scaledToWidth(360)));
     return result;
 }
+
