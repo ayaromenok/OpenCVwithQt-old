@@ -41,6 +41,7 @@ private:
 
     QCamera*                _cam;
     QCameraImageCapture*    _imgCap;
+    QLabel*                 _lbCamCap;
 
 };
 

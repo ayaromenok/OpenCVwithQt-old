@@ -93,9 +93,11 @@ CvWidget::_appendCameraPlane(Qt::Orientation orient)
     QPushButton*            btnImgCapture = new QPushButton("capture");
     QVBoxLayout*            loutV = new QVBoxLayout;
     QFrame*                 frame = new QFrame();
+    _lbCamCap                = new QLabel("Camera Captured Image");
 
     loutV->addWidget(btnImgCapture);
     loutV->addWidget(camViewFinder);
+    loutV->addWidget(_lbCamCap);
     frame->setLayout(loutV);
     frame->setFrameStyle(QFrame::Panel | QFrame::Raised);
     frame->setLineWidth(1);
@@ -113,6 +115,10 @@ CvWidget::_appendCameraPlane(Qt::Orientation orient)
 
     _cam = new QCamera(QCameraInfo::defaultCamera());
     _cam->setCaptureMode(QCamera::CaptureStillImage);
+
+    _imgCap = new QCameraImageCapture(_cam);
+    _imgCap->setCaptureDestination(QCameraImageCapture::CaptureToBuffer);
+
     connect(_imgCap, &QCameraImageCapture::imageAvailable,
             this, &CvWidget::_imgToBuffer);
     connect(btnImgCapture, SIGNAL(pressed()),
@@ -132,7 +138,10 @@ CvWidget::_imgCapture()
     qDebug() << QDateTime::currentMSecsSinceEpoch()
              << "CvWidget::_imgCapture();";
     bool result = false;
-
+    _cam->searchAndLock();
+    _imgCap->capture();
+    _cam->unlock();
+    result = true;
     return result;
 }
 
@@ -142,6 +151,13 @@ CvWidget::_imgToBuffer(int id, const QVideoFrame &buffer)
     qDebug() << QDateTime::currentMSecsSinceEpoch()
              << "CvWidget::_imgToBuffer(" << id <<"," << buffer.size() << ");";
     bool result = false;
-
+     QVideoFrame frame(buffer);
+    frame.map(QAbstractVideoBuffer::ReadOnly);
+        QImage::Format imageFormat = QVideoFrame::imageFormatFromPixelFormat(
+                    frame.pixelFormat());
+        int nbytes = frame.mappedBytes();
+        QImage imgIn = QImage::fromData(frame.bits(), nbytes).scaledToWidth(360);
+        qDebug() << "imgIn format" << imgIn.format() << "// 4 - Image::Format_RGB32";
+        _lbCamCap->setPixmap(QPixmap::fromImage(imgIn));
     return result;
 }
