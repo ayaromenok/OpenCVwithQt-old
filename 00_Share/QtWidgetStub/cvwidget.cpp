@@ -45,6 +45,10 @@ CvWidget::~CvWidget()
 {
     qDebug() << QDateTime::currentMSecsSinceEpoch()
              << "CvWidget::~CvWidget()";
+    if (_cam){
+        _cam->unload();
+        delete _cam;
+    }
 }
 
 int
@@ -117,10 +121,13 @@ CvWidget::_appendCameraPlane(Qt::Orientation orient)
     _cam->setCaptureMode(QCamera::CaptureStillImage);
 
     _imgCap = new QCameraImageCapture(_cam);
-    _imgCap->setCaptureDestination(QCameraImageCapture::CaptureToBuffer);
+    //_imgCap->setCaptureDestination(QCameraImageCapture::CaptureToBuffer);
+    _imgCap->setCaptureDestination(QCameraImageCapture::CaptureToFile);//for OSX\iOS
 
     connect(_imgCap, &QCameraImageCapture::imageAvailable,
             this, &CvWidget::_imgToBuffer);
+    connect(_imgCap, SIGNAL(imageSaved(int, const QString&)),
+        this, SLOT(_imgToFile(int, const QString&)));
     connect(btnImgCapture, SIGNAL(pressed()),
             this, SLOT (_imgCapture()));
 
@@ -151,13 +158,26 @@ CvWidget::_imgToBuffer(int id, const QVideoFrame &buffer)
     qDebug() << QDateTime::currentMSecsSinceEpoch()
              << "CvWidget::_imgToBuffer(" << id <<"," << buffer.size() << ");";
     bool result = false;
-     QVideoFrame frame(buffer);
+    QVideoFrame frame(buffer);
+
     frame.map(QAbstractVideoBuffer::ReadOnly);
-        QImage::Format imageFormat = QVideoFrame::imageFormatFromPixelFormat(
-                    frame.pixelFormat());
-        int nbytes = frame.mappedBytes();
-        QImage imgIn = QImage::fromData(frame.bits(), nbytes).scaledToWidth(360);
-        qDebug() << "imgIn format" << imgIn.format() << "// 4 - Image::Format_RGB32";
-        _lbCamCap->setPixmap(QPixmap::fromImage(imgIn));
+    QImage::Format imageFormat = QVideoFrame::imageFormatFromPixelFormat(
+                frame.pixelFormat());
+    int nbytes = frame.mappedBytes();
+    QImage imgIn = QImage::fromData(frame.bits(), nbytes).scaledToWidth(360);
+    qDebug() << "\t\tinput image format" << imgIn.format() << "// 4 - Image::Format_RGB32";
+    _lbCamCap->setPixmap(QPixmap::fromImage(imgIn));
+    return result;
+}
+
+bool
+CvWidget::_imgToFile(int id, const QString &fName)
+{
+    qDebug() << QDateTime::currentMSecsSinceEpoch()
+             << "CvWidget::_imgToFile(" << id <<"," << fName << ");";
+    bool result = false;
+    QImage imgIn(fName);
+    qDebug() << "\t\tinput image format" << imgIn.format() << "// 4 - Image::Format_RGB32";
+    _lbCamCap->setPixmap(QPixmap::fromImage(imgIn.scaledToWidth(360)));
     return result;
 }

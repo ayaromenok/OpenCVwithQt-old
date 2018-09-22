@@ -28,7 +28,7 @@ public:
 private slots:
     bool _imgCapture();
     bool _imgToBuffer(int id, const QVideoFrame &buffer);
-    //bool _imgToFile(int id, const QFile &file);   // workaround for OSX/iOS
+    bool _imgToFile(int id, const QString &fName);   // workaround for OSX/iOS
 
 private:
     int                     _appendImagePlane(Qt::Orientation orient);
