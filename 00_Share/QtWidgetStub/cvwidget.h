@@ -5,9 +5,17 @@
 #define CVWIDGET_H
 
 #include <QWidget>
+#include <QImage>
+#include <QVideoFrame>
+
 class QGridLayout;
 class QLayout;
 class QLabel;
+class QPushButton;
+
+class QCamera;
+class QCameraImageCapture;
+class QCameraViewfinder;
 
 class CvWidget : public QWidget
 {
@@ -16,13 +24,24 @@ class CvWidget : public QWidget
 public:
     CvWidget(QWidget *parent = 0);
     ~CvWidget();
+
+private slots:
+    bool _imgCapture();
+    bool _imgToBuffer(int id, const QVideoFrame &buffer);
+    //bool _imgToFile(int id, const QFile &file);   // workaround for OSX/iOS
+
 private:
-    int appendImagePlane(Qt::Orientation orient);
+    int                     _appendImagePlane(Qt::Orientation orient);
+    bool                    _appendCameraPlane(Qt::Orientation orient);
 
     int                     _numOfImagePlanes;
     QGridLayout*            _loutMain;
 //    QVector<QLayout*>*      _vcLayouts;
 //    QVector<QLabel*>*       _vcLabels;
+
+    QCamera*                _cam;
+    QCameraImageCapture*    _imgCap;
+
 };
 
 #endif // CVWIDGET_H

@@ -1,7 +1,8 @@
 # Copyright(C) 2018 Andrey Yaromenok, ayaromenok@gmail.com
 # MIT License - https://github.com/ayaromenok/OpenCVwithQt/blob/master/LICENSE
 
-QT       += core gui widgets
+QT      += core gui widgets
+QT      += multimedia multimediawidgets
 
 TARGET = QtWidgetStub
 TEMPLATE = app
