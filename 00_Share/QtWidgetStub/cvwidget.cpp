@@ -151,7 +151,11 @@ CvWidget::_imgCapture()
              << "CvWidget::_imgCapture();";
     bool result = false;
     _cam->searchAndLock();
+#ifdef CAMERA_CAPTURE_VIA_FILE
+    _imgCap->capture("./camFile.jpg");
+#else CAMERA_CAPTURE_VIA_FILE
     _imgCap->capture();
+#endif CAMERA_CAPTURE_VIA_FILE
     _cam->unlock();
     result = true;
     return result;
@@ -166,11 +170,12 @@ CvWidget::_imgToBuffer(int id, const QVideoFrame &buffer)
     QVideoFrame frame(buffer);
 
     frame.map(QAbstractVideoBuffer::ReadOnly);
-    QImage::Format imageFormat = QVideoFrame::imageFormatFromPixelFormat(
-                frame.pixelFormat());
+//    QImage::Format imageFormat = QVideoFrame::imageFormatFromPixelFormat(
+//                frame.pixelFormat());
     int nbytes = frame.mappedBytes();
     QImage imgIn = QImage::fromData(frame.bits(), nbytes).scaledToWidth(360);
-    qDebug() << "\t\tinput image format" << imgIn.format() << "// 4 - Image::Format_RGB32";
+    qDebug() << "\t\tinput image format" << imgIn.format()
+             << "// 4 - Image::Format_RGB32";
     _lbCamCap->setPixmap(QPixmap::fromImage(imgIn));
     return result;
 }
