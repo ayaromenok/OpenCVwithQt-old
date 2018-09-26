@@ -52,7 +52,6 @@ Window {
                             onImageSaved:{
                                 console.log("onImageSaved")
                                 mmImageIn.source = ""
-                                // `file:///` is for Win32, `file://` - Unix?
                                 mmImageIn.source = "file:///"+mmCamera.imageCapture.capturedImagePath;
                             }
                         }
