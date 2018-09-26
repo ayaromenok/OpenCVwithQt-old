@@ -1,21 +1,22 @@
 # Copyright(C) 2018 Andrey Yaromenok, ayaromenok@gmail.com
 # MIT License - https://github.com/ayaromenok/OpenCVwithQt/blob/master/LICENSE
 
-QT       += core gui widgets
+QT      += core gui widgets
+QT      += multimedia multimediawidgets
 
 TARGET = QtWidgetStub
 TEMPLATE = app
 
 CONFIG += c++11
 
+include(../share.pri)
+
 SOURCES += \
         main.cpp \
-        cvwidget.cpp \
-    ../share/cvres.cpp
+        cvwidget.cpp
 
 HEADERS += \
-        cvwidget.h \
-    ../share/cvres.h
+        cvwidget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
