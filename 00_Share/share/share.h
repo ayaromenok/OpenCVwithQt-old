@@ -6,13 +6,12 @@
 #include <QDebug>
 #include <QDateTime>
 
-//! \todo - check, where is __PRETTY_FUNCTION__ is NOT suopprted
+//! \todo - check, where is __PRETTY_FUNCTION__ is NOT supported
 /*
+#define CVQT_TIMESTAMP() {qDebug() << QDateTime::currentMSecsSinceEpoch() << __func__;}
+//*/
+//*
 #define CVQT_TIMESTAMP() \
-    ({ qDebug() << QDateTime::currentMSecsSinceEpoch() << __func__; })
-*/
-
-#define CVQT_TIMESTAMP() \
-    ({ qDebug() << QDateTime::currentMSecsSinceEpoch() << __PRETTY_FUNCTION__; })
-
+    { qDebug() << QDateTime::currentMSecsSinceEpoch() << __PRETTY_FUNCTION__; }
+//*/
 #endif // SHARE_H
