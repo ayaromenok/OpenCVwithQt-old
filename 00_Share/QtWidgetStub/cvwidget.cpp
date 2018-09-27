@@ -153,9 +153,9 @@ CvWidget::_imgCapture()
     _cam->searchAndLock();
 #ifdef CAMERA_CAPTURE_VIA_FILE
     _imgCap->capture("./camFile.jpg");
-#else CAMERA_CAPTURE_VIA_FILE
+#else //CAMERA_CAPTURE_VIA_FILE
     _imgCap->capture();
-#endif CAMERA_CAPTURE_VIA_FILE
+#endif //CAMERA_CAPTURE_VIA_FILE
     _cam->unlock();
     result = true;
     return result;
