@@ -51,8 +51,12 @@ Window {
                             }
                             onImageSaved:{
                                 console.log("onImageSaved")
+                                console.log(mmCamera.imageCapture.capturedImagePath);
                                 mmImageIn.source = ""
-                                mmImageIn.source = "file:///"+mmCamera.imageCapture.capturedImagePath;
+                                //Win/Lin©ç
+                                //mmImageIn.source = "file:///"+mmCamera.imageCapture.capturedImagePath;
+                                //OSX
+                                mmImageIn.source = "file:"+mmCamera.imageCapture.capturedImagePath;
                             }
                         }
                     }
