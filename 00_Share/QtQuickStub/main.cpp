@@ -3,15 +3,17 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QDebug>
-#include <QDateTime>
 #include "../share/cvres.h"
+#include "../share/share.h"
+
 #include "qcvobject.h"
 
 int main(int argc, char *argv[])
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch()
-             << "QtQuick OpenCV";
+    CVQT_TIMESTAMP();
+    qDebug() << QDateTime::currentMSecsSinceEpoch() << " msec since Epoch is\t"
+             << QDateTime::currentDateTime();
+
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);

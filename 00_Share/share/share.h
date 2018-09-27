@@ -1,3 +1,6 @@
+// Copyright(C) 2018 Andrey Yaromenok, ayaromenok@gmail.com
+// MIT License - https://github.com/ayaromenok/OpenCVwithQt/blob/master/LICENSE
+
 #ifndef SHARE_H
 #define SHARE_H
 #include <QDebug>
