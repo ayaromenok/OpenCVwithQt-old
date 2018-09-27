@@ -17,12 +17,14 @@
 #include <QCameraImageCapture>
 #include <QCameraViewfinder>
 
+#include "../share/share.h"
 #include "../share/cvres.h"
 
 CvWidget::CvWidget(QWidget *parent)
     : QWidget(parent)
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch() << "CvWidget::CvWidget()";
+    CVQT_TIMESTAMP();
+
     setWindowTitle("Qt Widget for OpenCV");
     CvRes::imageRgb();
     CvRes::imageRgbFull();
@@ -43,8 +45,8 @@ CvWidget::CvWidget(QWidget *parent)
 
 CvWidget::~CvWidget()
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch()
-             << "CvWidget::~CvWidget()";
+    CVQT_TIMESTAMP();
+
     if (_cam){
         _cam->unload();
         delete _cam;
@@ -54,9 +56,7 @@ CvWidget::~CvWidget()
 int
 CvWidget::_appendImagePlane(Qt::Orientation orient)
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch()
-             << "CvWidget::_appendImagePlane()";
-
+    CVQT_TIMESTAMP();
 
     QFrame*      frame = new QFrame();
     QVBoxLayout* loutV = new QVBoxLayout;
@@ -89,8 +89,8 @@ CvWidget::_appendImagePlane(Qt::Orientation orient)
 bool
 CvWidget::_appendCameraPlane(Qt::Orientation orient)
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch()
-             << "CvWidget::_setCam(" << orient << ");";
+    CVQT_TIMESTAMP();
+
     bool result = false;
 
     QCameraViewfinder*      camViewFinder  = new QCameraViewfinder;
@@ -147,8 +147,8 @@ CvWidget::_appendCameraPlane(Qt::Orientation orient)
 bool
 CvWidget::_imgCapture()
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch()
-             << "CvWidget::_imgCapture();";
+    CVQT_TIMESTAMP();
+
     bool result = false;
     _cam->searchAndLock();
 #ifdef CAMERA_CAPTURE_VIA_FILE
@@ -164,8 +164,8 @@ CvWidget::_imgCapture()
 bool
 CvWidget::_imgToBuffer(int id, const QVideoFrame &buffer)
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch()
-             << "CvWidget::_imgToBuffer(" << id <<"," << buffer.size() << ");";
+    CVQT_TIMESTAMP();
+
     bool result = false;
     QVideoFrame frame(buffer);
 
@@ -183,8 +183,8 @@ CvWidget::_imgToBuffer(int id, const QVideoFrame &buffer)
 bool
 CvWidget::_imgToFile(int id, const QString &fName)
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch()
-             << "CvWidget::_imgToFile(" << id <<"," << fName << ");";
+    CVQT_TIMESTAMP();
+
     bool result = false;
     QImage imgIn(fName);
     qDebug() << "\t\tinput image format" << imgIn.format() << "// 4 - Image::Format_RGB32";
