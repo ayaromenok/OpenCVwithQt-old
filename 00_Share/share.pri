@@ -1,5 +1,6 @@
 HEADERS += \
-    $$PWD/share/cvres.h
+    $$PWD/share/cvres.h \
+    $$PWD/share/share.h
 SOURCES += \
     $$PWD/share/cvres.cpp
 

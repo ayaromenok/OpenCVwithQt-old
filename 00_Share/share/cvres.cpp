@@ -6,10 +6,10 @@
 #include <QDir>
 #include <QDebug>
 #include <QDateTime>
-
+#include "share.h"
 CvRes::CvRes(QObject *parent) : QObject(parent)
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch() << "CvRes::CvRes()";
+    CVQT_TIMESTAMP();
 }
 
 bool
@@ -45,9 +45,9 @@ CvRes::imageRgbStereoRight()
 bool
 CvRes::getImage(ImgType type)
 {
+    CVQT_TIMESTAMP();
+
     bool result = false;
-    qDebug() << QDateTime::currentMSecsSinceEpoch()
-             << "CvRes::getImage();";
 
     switch (type) {
     case ImgType::Rgb:{
@@ -78,9 +78,9 @@ CvRes::getImage(ImgType type)
 bool
 CvRes::getImage(QString inName, QString outName)
 {
+    CVQT_TIMESTAMP();
+
     bool result = false;
-    qDebug() << QDateTime::currentMSecsSinceEpoch() << "CvRes::getImage("
-             << inName << "," << outName << ");";
 
     QFile fileIn, fileOut;
     QDir dir;

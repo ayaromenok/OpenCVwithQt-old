@@ -3,18 +3,20 @@
 
 #include "cvwidget.h"
 #include <QApplication>
-#include <QDebug>
-#include <QDateTime>
+#include "../share/share.h"
 
 void initApp()
 {
-    qDebug() << "Qt Widget Stub for OpenCV";
-    qDebug() << QDateTime::currentDateTime();
-    qDebug() << QDateTime::currentMSecsSinceEpoch() << "msec since Epoch";
+    CVQT_TIMESTAMP();
+
+    qDebug() << QDateTime::currentMSecsSinceEpoch() << " msec since Epoch is\t"
+             << QDateTime::currentDateTime();
 }
 
 int main(int argc, char *argv[])
 {
+    CVQT_TIMESTAMP();
+
     QApplication a(argc, argv);
     initApp();
     CvWidget w;
