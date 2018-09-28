@@ -53,9 +53,7 @@ Window {
                                 console.log("onImageSaved")
                                 console.log(mmCamera.imageCapture.capturedImagePath);
                                 mmImageIn.source = ""
-                                //Win/Lin©ç
-                                //mmImageIn.source = "file:///"+mmCamera.imageCapture.capturedImagePath;
-                                //OSX
+                                //tested and OK on OSX, Windows, Linux, Android
                                 mmImageIn.source = "file:"+mmCamera.imageCapture.capturedImagePath;
                             }
                         }
