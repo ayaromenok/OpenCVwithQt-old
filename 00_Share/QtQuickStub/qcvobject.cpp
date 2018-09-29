@@ -3,11 +3,13 @@
 
 #include "qcvobject.h"
 #include "../share/share.h"
+#include <opencv/cv.hpp>
 
 QCvObject::QCvObject(QObject *parent) : QObject(parent)
 {
     CVQT_TIMESTAMP();
-
+    cv::Point2f testP2f(1.67f, 3.1415f);
+    qDebug() << "cv::Point2f" << testP2f.x << testP2f.y;
     _intVal = 0;
 }
 

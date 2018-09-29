@@ -5,6 +5,7 @@ CONFIG += c++11
 
 DEFINES += QT_DEPRECATED_WARNINGS
 include(../share.pri)
+include(../opencv.pri)
 
 SOURCES += \
         main.cpp \
