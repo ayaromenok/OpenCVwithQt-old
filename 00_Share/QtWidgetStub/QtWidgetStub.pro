@@ -10,6 +10,8 @@ TEMPLATE = app
 CONFIG += c++11
 
 include(../share.pri)
+include(../opencv.pri)
+include(android.pri)
 
 SOURCES += \
         main.cpp \
@@ -25,3 +27,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     ../res.qrc
+

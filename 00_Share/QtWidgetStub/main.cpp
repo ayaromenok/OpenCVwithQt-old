@@ -5,12 +5,16 @@
 #include <QApplication>
 #include "../share/share.h"
 
+#include <opencv2/opencv.hpp>
+
 void initApp()
 {
     CVQT_TIMESTAMP();
 
     qDebug() << QDateTime::currentMSecsSinceEpoch() << " msec since Epoch is\t"
              << QDateTime::currentDateTime();
+    cv::Point2f testP2f(1.67f, 3.1415f);
+    qDebug() << "cv::Point2f" << testP2f.x << testP2f.y;
 }
 
 int main(int argc, char *argv[])

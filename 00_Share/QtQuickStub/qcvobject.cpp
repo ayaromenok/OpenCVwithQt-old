@@ -2,35 +2,35 @@
 // MIT License - https://github.com/ayaromenok/OpenCVwithQt/blob/master/LICENSE
 
 #include "qcvobject.h"
-#include <QDebug>
-#include <QDateTime>
+#include "../share/share.h"
+#include <opencv2/opencv.hpp>
 
 QCvObject::QCvObject(QObject *parent) : QObject(parent)
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch()
-             << "QCvObject::QCvObject()";
+    CVQT_TIMESTAMP();
+    cv::Point2f testP2f(1.67f, 3.1415f);
+    qDebug() << "cv::Point2f" << testP2f.x << testP2f.y;
     _intVal = 0;
 }
 
 QCvObject::~QCvObject()
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch()
-             << "QCvObject::~QCvObject()";
+    CVQT_TIMESTAMP();
 }
 
 
 int
 QCvObject::intVal()
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch()
-             << "int QCvObject::intVal()";
+    CVQT_TIMESTAMP();
+
     return _intVal;
 }
 
 void
 QCvObject::setIntVal(int value)
 {
-    qDebug() << QDateTime::currentMSecsSinceEpoch()
-             << "QCvObject::setIntVal(" << value << ");";
+    CVQT_TIMESTAMP();
+
     _intVal = value;
 }
