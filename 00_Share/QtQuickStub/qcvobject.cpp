@@ -3,7 +3,7 @@
 
 #include "qcvobject.h"
 #include "../share/share.h"
-#include <opencv/cv.hpp>
+#include <opencv2/opencv.hpp>
 
 QCvObject::QCvObject(QObject *parent) : QObject(parent)
 {

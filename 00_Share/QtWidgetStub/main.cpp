@@ -5,7 +5,7 @@
 #include <QApplication>
 #include "../share/share.h"
 
-#include <opencv/cv.hpp>
+#include <opencv2/opencv.hpp>
 
 void initApp()
 {
