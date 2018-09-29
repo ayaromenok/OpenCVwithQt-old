@@ -10,6 +10,7 @@ TEMPLATE = app
 CONFIG += c++11
 
 include(../share.pri)
+include(../opencv.pri)
 
 SOURCES += \
         main.cpp \
