@@ -50,3 +50,14 @@ macx {
         #LIB += -L$${CVMACX}/lib32
     }
 }
+
+ios {
+    LIBS += -F/Users/az/sdk/opencv/iOS
+    LIBS += -framework opencv2
+    simulator {
+        message("* OpenCV settings for iOS Simulator")
+    }
+    device{
+        message("* OpenCV settings for iOS")
+    }
+}
