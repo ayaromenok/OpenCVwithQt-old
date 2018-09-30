@@ -14,6 +14,8 @@ public:
     explicit QCvObject(QObject *parent = nullptr);
     ~QCvObject();
 
+    Q_INVOKABLE bool edgeDetectCanny();
+
 signals:
     void intValChanged(int);
 public slots:
