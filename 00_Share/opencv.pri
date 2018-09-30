@@ -14,7 +14,7 @@ linux:!android {
     LIBS += -L$${CVLINUX}/lib
     LIBS += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
 
-    debug {
+    CONFIG(debug, debug|release) {
         message("* use DEBUG HIGHGUI for Unix/Linux only.")
         #use for show intermediate debug windows for now
         DEFINES += CVQT_DEBUG_HIGHGUI
@@ -89,8 +89,14 @@ win32{
                 # MSVC2013 build required camera capture via file
                 DEFINES += CAMERA_CAPTURE_VIA_FILE
                 LIBS += -L$${CVWIN}/x64/vc12/lib
-                LIBS += -lopencv_world400d -lopencv_img_hash400d
-            }
+                CONFIG(debug, debug|release) {
+                    message( "           debug" )
+                    CONFIG += console
+                    LIBS += -lopencv_world400d -lopencv_img_hash400d
+                } else {
+                    message( "           release" )
+                    LIBS += -lopencv_world400 -lopencv_img_hash400
+                }           }
             equals(MSVC_VER, 13.0){
                 # camera capture via buffer NOT tested
                 message("           msvc13 - 2014")
@@ -100,10 +106,19 @@ win32{
                 message("           msvc14 - 2015")
             }
             equals(MSVC_VER, 15.0){
-                # camera capture via buffer is OK
+
                 message("           msvc15 - 2017")
                 LIBS += -L$${CVWIN}/x64/vc15/lib
-                LIBS += -lopencv_world400d -lopencv_img_hash400d
+                # MSVC2017 required camera capture via file
+                DEFINES += CAMERA_CAPTURE_VIA_FILE
+                CONFIG(debug, debug|release) {
+                    message( "           debug" )
+                    CONFIG += console
+                    LIBS += -lopencv_world400d -lopencv_img_hash400d
+                } else {
+                    message( "           release" )
+                    LIBS += -lopencv_world400 -lopencv_img_hash400
+                }
             }
         }
     }
