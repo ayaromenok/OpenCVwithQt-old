@@ -118,7 +118,7 @@ CvRes::getImage(QString inName, QString outName)
 cv::Mat
 CvRes::imageQtToCv(QImage &imageIn)
 {
-    cv::Mat imageOut(cv::Size(imageIn.height(), imageIn.width()),
+    cv::Mat imageOut(cv::Size(imageIn.width(), imageIn.height()),
                               CV_8UC4, imageIn.bits());
     return imageOut;
 }
@@ -126,7 +126,7 @@ CvRes::imageQtToCv(QImage &imageIn)
 QImage
 CvRes::imageCvToQt(cv::Mat &imageIn)
 {
-    QImage imageOut(imageIn.rows, imageIn.cols,  QImage::Format_RGB888);
+    QImage imageOut(imageIn.cols, imageIn.rows,  QImage::Format_RGB888);
     cv::Mat imageCvOut(cv::Size(imageIn.cols,imageIn.rows),
                        CV_8UC3, imageOut.bits());
     cv::cvtColor(imageIn, imageCvOut, cv::COLOR_BGR2RGB);
