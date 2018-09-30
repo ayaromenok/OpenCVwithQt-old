@@ -73,9 +73,9 @@ ios {
     }
 }
 
-win32:debug {
-      CONFIG += console
-}
+#win32:debug {
+#      CONFIG += console
+#}
 win32{
     message("* OpenCV settings for Windows.")
     INCLUDEPATH += $${CVWIN}/include
@@ -88,8 +88,8 @@ win32{
                 message("           msvc12 - 2013")
                 # MSVC2013 build required camera capture via file
                 DEFINES += CAMERA_CAPTURE_VIA_FILE
-                LIBS += -L$${CVWIN}/x64/vc15/lib
-                LIBS += -lopencv_world400
+                LIBS += -L$${CVWIN}/x64/vc12/lib
+                LIBS += -lopencv_world400d -lopencv_img_hash400d
             }
             equals(MSVC_VER, 13.0){
                 # camera capture via buffer NOT tested
@@ -103,21 +103,17 @@ win32{
                 # camera capture via buffer is OK
                 message("           msvc15 - 2017")
                 LIBS += -L$${CVWIN}/x64/vc15/lib
-                LIBS += -lopencv_world400
+                LIBS += -lopencv_world400d -lopencv_img_hash400d
             }
         }
     }
-    contains(QMAKE_TARGET.arch, x86){
-        message("        arch: i386")
+#    contains(QMAKE_TARGET.arch, x86){
+#        message("        arch: i386")
         win32-g++ {
             message("               compiler: mingw-32")
             # mingw-32 required camera capture via file
             DEFINES += CAMERA_CAPTURE_VIA_FILE
-            LIBS += -L$${CVWIN}/lib
-            LIBS += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
+            LIBS += $${CVWIN}\x86\mingw\bin\libopencv_*.dll
         }
-        win32-msvc* {
-            message("               compiler: msvc")
-        }
-    }
+#    }
 }
