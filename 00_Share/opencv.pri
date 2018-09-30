@@ -13,7 +13,16 @@ linux:!android {
     INCLUDEPATH += $${CVLINUX}/include
     LIBS += -L$${CVLINUX}/lib
     LIBS += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
-    #LIBS += -lopencv_highgui
+
+    debug {
+        message("* use DEBUG HIGHGUI for Unix/Linux only.")
+        #use for show intermediate debug windows for now
+        DEFINES += CVQT_DEBUG_HIGHGUI
+        LIBS += -lopencv_highgui
+        # to use highgui with QtQuick app
+        QT += widgets
+    }
+
     contains(QMAKE_HOST.arch, x86_64){
         message("        arch: amd64")
         #LIB += -L$${CVLINUX}/lib64
@@ -64,6 +73,9 @@ ios {
     }
 }
 
+win32:debug {
+      CONFIG += console
+}
 win32{
     message("* OpenCV settings for Windows.")
     INCLUDEPATH += $${CVWIN}/include

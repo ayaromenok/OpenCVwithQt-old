@@ -1,7 +1,11 @@
 // Copyright(C) 2018 Andrey Yaromenok, ayaromenok@gmail.com
 // MIT License - https://github.com/ayaromenok/OpenCVwithQt/blob/master/LICENSE
 
+#ifdef  CVQT_DEBUG_HIGHGUI
+#include <QApplication>
+#else   // CVQT_DEBUG_HIGHGUI
 #include <QGuiApplication>
+#endif  // CVQT_DEBUG_HIGHGUI
 #include <QQmlApplicationEngine>
 #include "../share/cvres.h"
 #include "../share/share.h"
@@ -16,8 +20,12 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QGuiApplication app(argc, argv);
 
+#ifdef  CVQT_DEBUG_HIGHGUI
+    QApplication app(argc, argv);
+#else   // CVQT_DEBUG_HIGHGUI
+    QGuiApplication app(argc, argv);
+#endif  // CVQT_DEBUG_HIGHGUI
     CvRes::imageRgb();
     CvRes::imageRgbFull();
     CvRes::imageRgbPart();
