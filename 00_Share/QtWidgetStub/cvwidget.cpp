@@ -152,7 +152,7 @@ CvWidget::_imgCapture()
     bool result = false;
     _cam->searchAndLock();
 #ifdef CAMERA_CAPTURE_VIA_FILE
-    _imgCap->capture("./camFile.jpg");
+    _imgCap->capture("./imgCam.jpg");
 #else //CAMERA_CAPTURE_VIA_FILE
     _imgCap->capture();
 #endif //CAMERA_CAPTURE_VIA_FILE
