@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
     CvRes::imageRgbStereoLeft();
     CvRes::imageRgbStereoRight();
 
-    QCvObject cvo;
     qmlRegisterType<QCvObject> ("CvObject", 1, 0, "CvObject");
 
     QQmlApplicationEngine engine;
