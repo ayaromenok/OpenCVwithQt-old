@@ -5,6 +5,8 @@
 #define CVRES_H
 
 #include <QObject>
+#include <QImage>
+#include <opencv2/core.hpp>
 
 class CvRes : public QObject
 {
@@ -17,6 +19,9 @@ public:
     static bool imageRgbPart();
     static bool imageRgbStereoLeft();
     static bool imageRgbStereoRight();
+
+    static cv::Mat imageQtToCv(QImage &imageIn);
+    static QImage imageCvToQt(cv::Mat &imageIn);
 
 signals:
 

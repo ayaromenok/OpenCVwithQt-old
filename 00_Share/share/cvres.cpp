@@ -7,6 +7,8 @@
 #include <QDebug>
 #include <QDateTime>
 #include "share.h"
+#include <opencv2/imgproc.hpp>
+
 CvRes::CvRes(QObject *parent) : QObject(parent)
 {
     CVQT_TIMESTAMP();
@@ -113,4 +115,20 @@ CvRes::getImage(QString inName, QString outName)
     return result;
 }
 
+cv::Mat
+CvRes::imageQtToCv(QImage &imageIn)
+{
+    cv::Mat imageOut(cv::Size(imageIn.height(), imageIn.width()),
+                              CV_8UC4, imageIn.bits());
+    return imageOut;
+}
 
+QImage
+CvRes::imageCvToQt(cv::Mat &imageIn)
+{
+    QImage imageOut(imageIn.rows, imageIn.cols,  QImage::Format_RGB888);
+    cv::Mat imageCvOut(cv::Size(imageIn.cols,imageIn.rows),
+                       CV_8UC3, imageOut.bits());
+    cv::cvtColor(imageIn, imageCvOut, cv::COLOR_BGR2RGB);
+    return imageOut;
+}
