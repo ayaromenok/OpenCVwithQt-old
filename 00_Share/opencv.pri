@@ -13,6 +13,7 @@ linux:!android {
     INCLUDEPATH += $${CVLINUX}/include
     LIBS += -L$${CVLINUX}/lib
     LIBS += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
+    LIBS += -lopencv_calib3d
 
     CONFIG(debug, debug|release) {
         message("* use DEBUG HIGHGUI for Unix/Linux only.")
@@ -51,7 +52,7 @@ macx {
     INCLUDEPATH += $${CVMACX}/include
     LIBS += -L$${CVMACX}/lib
     LIBS += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
-    #LIBS += -lopencv_highgui
+    LIBS += -lopencv_calib3d
     contains(QMAKE_HOST.arch, x86_64){
         message("        arch: amd64")
         #LIB += -L$${CVMACX}/lib64

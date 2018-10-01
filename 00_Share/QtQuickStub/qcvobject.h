@@ -15,6 +15,7 @@ public:
     ~QCvObject();
 
     Q_INVOKABLE bool edgeDetectCanny();
+    Q_INVOKABLE bool checkedBoardDetect();
 
 signals:
     void intValChanged(int);

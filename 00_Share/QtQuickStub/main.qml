@@ -100,14 +100,19 @@ Window {
             implicitWidth: 200
             QQL.ColumnLayout{
                 QQC.Button{
-                    text: "Button #2"
-                    onPressed: cvo.setIntVal(2)
+                    text: "Checked Board detect"
+                    onPressed: { cvo.checkedBoardDetect()
+                        imgCheckedBoardDetect.source = ""
+                        imgCheckedBoardDetect.source = "file:./checkedBoardDetect.jpg"
+                        }
                 }
                 QQ.Image{
+                    id: imgCheckedBoardDetect
                     sourceSize.width: 200
                     sourceSize.height: 200
                     fillMode: QQ.Image.PreserveAspectFit
                     source: "file:./imageRgbPart.png"
+                    transform: QQ.Rotation{origin.x: 100; origin.y:100; angle:90}
                 }
             }
         }

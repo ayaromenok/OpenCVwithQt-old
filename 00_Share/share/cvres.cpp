@@ -45,6 +45,11 @@ CvRes::imageRgbStereoRight()
 }
 
 bool
+CvRes::imageChecked12x12()
+{
+    return getImage(ImgType::Checked12x12);
+}
+bool
 CvRes::getImage(ImgType type)
 {
     CVQT_TIMESTAMP();
@@ -66,6 +71,10 @@ CvRes::getImage(ImgType type)
     }
     case ImgType::RgbStereoRight:{
         result = getImage(":/data/640x480x24Right.png", "./imageRgbStereoRight.png");
+        break;
+    }
+    case ImgType::Checked12x12:{
+        result = getImage(":/data/imgChecked_12x12.png", "./imageChecked12x12.png");
         break;
     }
     default:{

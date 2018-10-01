@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
     CvRes::imageRgbPart();
     CvRes::imageRgbStereoLeft();
     CvRes::imageRgbStereoRight();
+    CvRes::imageChecked12x12();
 
     qmlRegisterType<QCvObject> ("CvObject", 1, 0, "CvObject");
 
