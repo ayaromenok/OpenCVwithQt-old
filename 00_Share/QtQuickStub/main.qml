@@ -83,10 +83,14 @@ Window {
             implicitWidth: 200
             QQL.ColumnLayout{
                 QQC.Button{
-                    text: "Button #1"
-                    onPressed: cvo.setIntVal(1)
+                    text: "Blur Gaussian"
+                    onPressed: { cvo.blurGaussian()
+                        imgBlurGaussian.source = ""
+                        imgBlurGaussian.source = "file:./blurGaussian.jpg"
+                        }
                 }
                 QQ.Image{
+                    id: imgBlurGaussian
                     sourceSize.width: 200
                     sourceSize.height: 200
                     fillMode: QQ.Image.PreserveAspectFit

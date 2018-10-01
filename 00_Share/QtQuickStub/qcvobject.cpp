@@ -102,3 +102,31 @@ QCvObject::checkedBoardDetect()
     pc.stop();
     return result;
 }
+
+bool
+QCvObject::blurGaussian()
+{
+    CVQT_TIMESTAMP();
+    bool result = false;
+    CvQtPerf pc;
+
+    CvRes::imageRgb();
+
+    pc.start();
+    QImage imgInQt("./imageRgb.png");
+    if (!imgInQt.isNull()){
+        cv::Mat imgIn, imgOut;
+        imgIn = CvRes::imageQtToCv(imgInQt);
+        cv::GaussianBlur(imgIn, imgOut, cv::Size(5,5), 3, 3);
+
+#ifdef CVQT_DEBUG_HIGHGUI
+     cv::namedWindow("imgOut", cv::WINDOW_AUTOSIZE);
+     cv::imshow("imgOut", imgOut);
+#endif //CVQT_DEBUG_HIGHGUI
+        QImage imgOutQt;
+        imgOutQt = CvRes::imageCvToQt(imgOut);
+        result = imgOutQt.save("./blurGaussian.jpg");
+    }
+    pc.stop();
+    return result;
+}
