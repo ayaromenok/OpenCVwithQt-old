@@ -16,6 +16,7 @@ class QPushButton;
 class QCamera;
 class QCameraImageCapture;
 class QCameraViewfinder;
+class QTimer;
 
 class CvWidget : public QWidget
 {
@@ -43,6 +44,7 @@ private:
     QCameraImageCapture*    _imgCap;
     QLabel*                 _lbCamCap;
 
+    QTimer*                 _imgCapTimer;
 };
 
 #endif // CVWIDGET_H

@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QPushButton>
+#include <QTimer>
 
 #include <QCamera>
 #include <QCameraInfo>
@@ -121,8 +122,11 @@ CvWidget::_appendCameraPlane(Qt::Orientation orient)
     _cam->setCaptureMode(QCamera::CaptureStillImage);
 
     _imgCap = new QCameraImageCapture(_cam);
+
+    _imgCapTimer = new QTimer(this);
+
 #ifdef CAMERA_CAPTURE_VIA_FILE
-    //workaround for OSX\iOS
+    //workaround for OSX\iOS\some Windows builds
     _imgCap->setCaptureDestination(QCameraImageCapture::CaptureToFile);
     connect(_imgCap, SIGNAL(imageSaved(int, const QString&)),
         this, SLOT(_imgToFile(int, const QString&)));
@@ -132,13 +136,16 @@ CvWidget::_appendCameraPlane(Qt::Orientation orient)
             this, &CvWidget::_imgToBuffer);
 #endif //CAMERA_CAPTURE_VIA_FILE
 
-
     connect(btnImgCapture, SIGNAL(pressed()),
             this, SLOT (_imgCapture()));
+    connect(_imgCapTimer, SIGNAL(timeout()),
+            this, SLOT(_imgCapture()));
 
     camViewFinder->show();
     _cam->setViewfinder(camViewFinder);
     _cam->start();
+
+    //_imgCapTimer->start(500);
 
     return result;
 }
