@@ -115,7 +115,7 @@ Window {
                     sourceSize.width: 200
                     sourceSize.height: 200
                     fillMode: QQ.Image.PreserveAspectFit
-                    source: "file:./imageRgbPart.png"
+                    source: "file:./imageChecked12x12.png"
                     transform: QQ.Rotation{origin.x: 100; origin.y:100; angle:90}
                 }
             }
