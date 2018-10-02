@@ -4,5 +4,6 @@
         <file>data/640x480x24Right.png</file>
         <file>data/len_full.png</file>
         <file>data/len_part.png</file>
+        <file>data/imgChecked_12x12.png</file>
     </qresource>
 </RCC>

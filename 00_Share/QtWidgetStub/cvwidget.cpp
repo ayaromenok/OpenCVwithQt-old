@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QPushButton>
+#include <QTimer>
 
 #include <QCamera>
 #include <QCameraInfo>
@@ -121,8 +122,11 @@ CvWidget::_appendCameraPlane(Qt::Orientation orient)
     _cam->setCaptureMode(QCamera::CaptureStillImage);
 
     _imgCap = new QCameraImageCapture(_cam);
+
+    _imgCapTimer = new QTimer(this);
+
 #ifdef CAMERA_CAPTURE_VIA_FILE
-    //workaround for OSX\iOS
+    //workaround for OSX\iOS\some Windows builds
     _imgCap->setCaptureDestination(QCameraImageCapture::CaptureToFile);
     connect(_imgCap, SIGNAL(imageSaved(int, const QString&)),
         this, SLOT(_imgToFile(int, const QString&)));
@@ -132,13 +136,16 @@ CvWidget::_appendCameraPlane(Qt::Orientation orient)
             this, &CvWidget::_imgToBuffer);
 #endif //CAMERA_CAPTURE_VIA_FILE
 
-
     connect(btnImgCapture, SIGNAL(pressed()),
             this, SLOT (_imgCapture()));
+    connect(_imgCapTimer, SIGNAL(timeout()),
+            this, SLOT(_imgCapture()));
 
     camViewFinder->show();
     _cam->setViewfinder(camViewFinder);
     _cam->start();
+
+    //_imgCapTimer->start(500);
 
     return result;
 }
@@ -152,7 +159,7 @@ CvWidget::_imgCapture()
     bool result = false;
     _cam->searchAndLock();
 #ifdef CAMERA_CAPTURE_VIA_FILE
-    _imgCap->capture("./camFile.jpg");
+    _imgCap->capture("./imgCam.jpg");
 #else //CAMERA_CAPTURE_VIA_FILE
     _imgCap->capture();
 #endif //CAMERA_CAPTURE_VIA_FILE
@@ -175,7 +182,7 @@ CvWidget::_imgToBuffer(int id, const QVideoFrame &buffer)
     int nbytes = frame.mappedBytes();
     QImage imgIn = QImage::fromData(frame.bits(), nbytes).scaledToWidth(360);
     qDebug() << "\t\tinput image format" << imgIn.format()
-             << "// 4 - Image::Format_RGB32";
+             << "// 4 - Image::Format_RGB32" << "id" <<id;
     _lbCamCap->setPixmap(QPixmap::fromImage(imgIn));
     return result;
 }
@@ -187,7 +194,8 @@ CvWidget::_imgToFile(int id, const QString &fName)
 
     bool result = false;
     QImage imgIn(fName);
-    qDebug() << "\t\tinput image format" << imgIn.format() << "// 4 - Image::Format_RGB32";
+    qDebug() << "\t\tinput image format" << imgIn.format()
+             << "// 4 - Image::Format_RGB32" << "id" << id;
     _lbCamCap->setPixmap(QPixmap::fromImage(imgIn.scaledToWidth(360)));
     return result;
 }

@@ -22,4 +22,21 @@
         { qDebug() << QDateTime::currentMSecsSinceEpoch() << __PRETTY_FUNCTION__; }
 #endif //_MSC_VER
 
+class CvQtPerf{
+
+
+public:
+    CvQtPerf(){};
+
+    void start(){_timeStart = QDateTime::currentMSecsSinceEpoch();}
+    void stop(){_timeStop = QDateTime::currentMSecsSinceEpoch();
+                _timeDiff = _timeStop - _timeStart;
+                qDebug() << "diff: " << _timeDiff << "msec" ;
+               }
+private:
+    qint64      _timeStart;
+    qint64      _timeStop;
+    qint64      _timeDiff;
+};
+
 #endif // SHARE_H

@@ -14,6 +14,10 @@ public:
     explicit QCvObject(QObject *parent = nullptr);
     ~QCvObject();
 
+    Q_INVOKABLE bool blurGaussian();
+    Q_INVOKABLE bool edgeDetectCanny();
+    Q_INVOKABLE bool checkedBoardDetect();
+
 signals:
     void intValChanged(int);
 public slots:

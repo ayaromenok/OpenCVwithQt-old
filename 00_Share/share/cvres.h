@@ -5,11 +5,13 @@
 #define CVRES_H
 
 #include <QObject>
+#include <QImage>
+#include <opencv2/core.hpp>
 
 class CvRes : public QObject
 {
     Q_OBJECT
-enum class ImgType {Rgb, RgbPart, RgbStereoLeft, RgbStereoRight, Unknown};
+enum class ImgType {Rgb, RgbPart, RgbStereoLeft, RgbStereoRight, Checked12x12, Unknown};
 public:
     explicit CvRes(QObject *parent = nullptr);
     static bool imageRgb();
@@ -17,6 +19,10 @@ public:
     static bool imageRgbPart();
     static bool imageRgbStereoLeft();
     static bool imageRgbStereoRight();
+    static bool imageChecked12x12();
+
+    static cv::Mat imageQtToCv(QImage &imageIn);
+    static QImage imageCvToQt(cv::Mat &imageIn);
 
 signals:
 

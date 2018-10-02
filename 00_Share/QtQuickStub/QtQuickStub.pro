@@ -7,6 +7,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(../share.pri)
 include(../opencv.pri)
 
+HEADERS += \
+    qcvobject.h
+
 SOURCES += \
         main.cpp \
     qcvobject.cpp
@@ -24,6 +27,3 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-HEADERS += \
-    qcvobject.h

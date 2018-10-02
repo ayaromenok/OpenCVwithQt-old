@@ -13,7 +13,17 @@ linux:!android {
     INCLUDEPATH += $${CVLINUX}/include
     LIBS += -L$${CVLINUX}/lib
     LIBS += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
-    #LIBS += -lopencv_highgui
+    LIBS += -lopencv_calib3d
+
+    CONFIG(debug, debug|release) {
+        message("* use DEBUG HIGHGUI for Unix/Linux only.")
+        #use for show intermediate debug windows for now
+        DEFINES += CVQT_DEBUG_HIGHGUI
+        LIBS += -lopencv_highgui
+        # to use highgui with QtQuick app
+        QT += widgets
+    }
+
     contains(QMAKE_HOST.arch, x86_64){
         message("        arch: amd64")
         #LIB += -L$${CVLINUX}/lib64
@@ -46,7 +56,7 @@ macx {
     INCLUDEPATH += $${CVMACX}/include
     LIBS += -L$${CVMACX}/lib
     LIBS += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
-    #LIBS += -lopencv_highgui
+    LIBS += -lopencv_calib3d
     contains(QMAKE_HOST.arch, x86_64){
         message("        arch: amd64")
         #LIB += -L$${CVMACX}/lib64
@@ -68,6 +78,9 @@ ios {
     }
 }
 
+#win32:debug {
+#      CONFIG += console
+#}
 win32{
     message("* OpenCV settings for Windows.")
     INCLUDEPATH += $${CVWIN}/include
@@ -80,9 +93,15 @@ win32{
                 message("           msvc12 - 2013")
                 # MSVC2013 build required camera capture via file
                 DEFINES += CAMERA_CAPTURE_VIA_FILE
-                LIBS += -L$${CVWIN}/x64/vc15/lib
-                LIBS += -lopencv_world400
-            }
+                LIBS += -L$${CVWIN}/x64/vc12/lib
+                CONFIG(debug, debug|release) {
+                    message( "           debug" )
+                    CONFIG += console
+                    LIBS += -lopencv_world400d -lopencv_img_hash400d
+                } else {
+                    message( "           release" )
+                    LIBS += -lopencv_world400 -lopencv_img_hash400
+                }           }
             equals(MSVC_VER, 13.0){
                 # camera capture via buffer NOT tested
                 message("           msvc13 - 2014")
@@ -92,24 +111,29 @@ win32{
                 message("           msvc14 - 2015")
             }
             equals(MSVC_VER, 15.0){
-                # camera capture via buffer is OK
+
                 message("           msvc15 - 2017")
                 LIBS += -L$${CVWIN}/x64/vc15/lib
-                LIBS += -lopencv_world400
+                # MSVC2017 required camera capture via file
+                DEFINES += CAMERA_CAPTURE_VIA_FILE
+                CONFIG(debug, debug|release) {
+                    message( "           debug" )
+                    CONFIG += console
+                    LIBS += -lopencv_world400d -lopencv_img_hash400d
+                } else {
+                    message( "           release" )
+                    LIBS += -lopencv_world400 -lopencv_img_hash400
+                }
             }
         }
     }
-    contains(QMAKE_TARGET.arch, x86){
-        message("        arch: i386")
+#    contains(QMAKE_TARGET.arch, x86){
+#        message("        arch: i386")
         win32-g++ {
             message("               compiler: mingw-32")
             # mingw-32 required camera capture via file
             DEFINES += CAMERA_CAPTURE_VIA_FILE
-            LIBS += -L$${CVWIN}/lib
-            LIBS += -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
+            LIBS += $${CVWIN}\x86\mingw\bin\libopencv_*.dll
         }
-        win32-msvc* {
-            message("               compiler: msvc")
-        }
-    }
+#    }
 }

@@ -11,7 +11,7 @@ import CvObject 1.0
 
 Window {
     visible: true
-    width: 1024
+    width: 800
     height: 480
     title: qsTr("Qt Quick for OpenCV")
 
@@ -26,7 +26,7 @@ Window {
         QQ.Rectangle{
             color: "darkgrey"
             implicitHeight: 480
-            implicitWidth: 256
+            implicitWidth: 200
             QQL.ColumnLayout{
                 QQC.Button{
                     text: "Button #0"
@@ -39,8 +39,8 @@ Window {
                 }
                 QQ.Rectangle{
                     color: "blue"
-                    implicitWidth: 256
-                    implicitHeight: 172
+                    implicitWidth: 200
+                    implicitHeight: 200
                     QMM.Camera {
                         id: mmCamera
                         captureMode: QMM.Camera.CaptureStillImage
@@ -67,8 +67,8 @@ Window {
                 QQ.Image{
                     id: mmImageIn
                     cache: false
-                    sourceSize.width: 256
-                    sourceSize.height: 256
+                    sourceSize.width: 200
+                    sourceSize.height: 200
                     fillMode: QQ.Image.PreserveAspectFit
                     source: "file:./imageRgbPart.png"
                     onStatusChanged: if (mmImageIn.status == QQ.Image.Ready)
@@ -80,15 +80,19 @@ Window {
         QQ.Rectangle{
             color: "grey"
             implicitHeight: 480
-            implicitWidth: 256
+            implicitWidth: 200
             QQL.ColumnLayout{
                 QQC.Button{
-                    text: "Button #1"
-                    onPressed: cvo.setIntVal(1)
+                    text: "Blur Gaussian"
+                    onPressed: { cvo.blurGaussian()
+                        imgBlurGaussian.source = ""
+                        imgBlurGaussian.source = "file:./blurGaussian.jpg"
+                        }
                 }
                 QQ.Image{
-                    sourceSize.width: 256
-                    sourceSize.height: 256
+                    id: imgBlurGaussian
+                    sourceSize.width: 200
+                    sourceSize.height: 200
                     fillMode: QQ.Image.PreserveAspectFit
                     source: "file:./imageRgb.png"
                 }
@@ -97,32 +101,41 @@ Window {
         QQ.Rectangle{
             color: "lightgrey"
             implicitHeight: 480
-            implicitWidth: 256
+            implicitWidth: 200
             QQL.ColumnLayout{
                 QQC.Button{
-                    text: "Button #2"
-                    onPressed: cvo.setIntVal(2)
+                    text: "Checked Board detect"
+                    onPressed: { cvo.checkedBoardDetect()
+                        imgCheckedBoardDetect.source = ""
+                        imgCheckedBoardDetect.source = "file:./checkedBoardDetect.jpg"
+                        }
                 }
                 QQ.Image{
-                    sourceSize.width: 256
-                    sourceSize.height: 256
+                    id: imgCheckedBoardDetect
+                    sourceSize.width: 200
+                    sourceSize.height: 200
                     fillMode: QQ.Image.PreserveAspectFit
-                    source: "file:./imageRgbPart.png"
+                    source: "file:./imageChecked12x12.png"
+                    transform: QQ.Rotation{origin.x: 100; origin.y:100; angle:90}
                 }
             }
         }
         QQ.Rectangle{
             color: "grey"
             implicitHeight: 480
-            implicitWidth: 256
+            implicitWidth: 200
             QQL.ColumnLayout{
                 QQC.Button{
-                    text: "Button #3"
-                    onPressed: cvo.setIntVal(3)
+                    text: "Edge Detect canny"
+                    onPressed: { cvo.edgeDetectCanny()
+                                imgEgdeDetectCanny.source = ""
+                                imgEgdeDetectCanny.source = "file:./edgeDetectCanny.jpg"
+                                }
                 }
                 QQ.Image{
-                    sourceSize.width: 256
-                    sourceSize.height: 256
+                    id: imgEgdeDetectCanny
+                    sourceSize.width: 200
+                    sourceSize.height: 200
                     fillMode: QQ.Image.PreserveAspectFit
                     source: "file:./imageRgb.png"
                 }
