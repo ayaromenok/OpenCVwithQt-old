@@ -175,7 +175,7 @@ CvWidget::_imgToBuffer(int id, const QVideoFrame &buffer)
     int nbytes = frame.mappedBytes();
     QImage imgIn = QImage::fromData(frame.bits(), nbytes).scaledToWidth(360);
     qDebug() << "\t\tinput image format" << imgIn.format()
-             << "// 4 - Image::Format_RGB32";
+             << "// 4 - Image::Format_RGB32" << "id" <<id;
     _lbCamCap->setPixmap(QPixmap::fromImage(imgIn));
     return result;
 }
@@ -187,7 +187,8 @@ CvWidget::_imgToFile(int id, const QString &fName)
 
     bool result = false;
     QImage imgIn(fName);
-    qDebug() << "\t\tinput image format" << imgIn.format() << "// 4 - Image::Format_RGB32";
+    qDebug() << "\t\tinput image format" << imgIn.format()
+             << "// 4 - Image::Format_RGB32" << "id" << id;
     _lbCamCap->setPixmap(QPixmap::fromImage(imgIn.scaledToWidth(360)));
     return result;
 }
