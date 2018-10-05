@@ -21,6 +21,10 @@
 #include "../share/share.h"
 #include "../share/cvres.h"
 
+#include <opencv2/opencv.hpp>
+#include <QImage>
+
+
 CvWidget::CvWidget(QWidget *parent)
     : QWidget(parent)
 {
@@ -38,9 +42,9 @@ CvWidget::CvWidget(QWidget *parent)
     _loutMain = new QGridLayout;
     this->setLayout(_loutMain);
     _appendCameraPlane(Qt::Horizontal);
-    _appendImagePlane(Qt::Horizontal);
-    _appendImagePlane(Qt::Horizontal);
-    _appendImagePlane(Qt::Horizontal);
+    _appendImageSmoothPlane(Qt::Horizontal);
+    _appendImageEdgeDetectPlane(Qt::Horizontal);
+    _appendCameraCalibrationPlane(Qt::Horizontal);
 
 }
 
@@ -54,25 +58,44 @@ CvWidget::~CvWidget()
     }
 }
 
-int
-CvWidget::_appendImagePlane(Qt::Orientation orient)
+bool
+CvWidget::_appendImageSmoothPlane(Qt::Orientation orient)
 {
     CVQT_TIMESTAMP();
 
     QFrame*      frame = new QFrame();
     QVBoxLayout* loutV = new QVBoxLayout;
-    QLabel*      lbOne = new QLabel("label one: #"
-                                    + QString::number(_numOfImagePlanes));
-    QLabel*      lbTwo = new QLabel("label two: #"
+    QLabel*      lbOne = new QLabel("Image smooth: #"
                                     + QString::number(_numOfImagePlanes));
     QLabel*      lbImg = new QLabel("image");
-    QPixmap    pixmap("./imageRgb.png");
+
+    CvQtPerf     pc;
+    bool result = false;
+    pc.start();
+
+    QImage imgInQt("./imageRgb.png");
+    if (!imgInQt.isNull()){
+        cv::Mat imgIn, imgOut;
+        imgIn = CvRes::imageQtToCv(imgInQt);
+        cv::GaussianBlur(imgIn, imgOut, cv::Size(5,5), 3, 3);
+
+#ifdef CVQT_DEBUG_HIGHGUI
+     cv::namedWindow("imgOut", cv::WINDOW_AUTOSIZE);
+     cv::imshow("imgOut", imgOut);
+#endif //CVQT_DEBUG_HIGHGUI
+        QImage imgOutQt;
+        imgOutQt = CvRes::imageCvToQt(imgOut);
+        result = imgOutQt.save("./blurGaussian.jpg");
+    }
+    pc.stop();
+
+    QPixmap      pixmap("./blurGaussian.jpg");
 
     lbImg->setPixmap(pixmap);
 
     loutV->addWidget(lbOne);
     loutV->addWidget(lbImg);
-    loutV->addWidget(lbTwo);
+
     frame->setLayout(loutV);
     frame->setFrameStyle(QFrame::Panel | QFrame::Raised);
     frame->setLineWidth(1);
@@ -83,7 +106,7 @@ CvWidget::_appendImagePlane(Qt::Orientation orient)
         _loutMain->addWidget(frame, 0, _numOfImagePlanes);
 
     _numOfImagePlanes++;
-    return _numOfImagePlanes;
+    return result;
 }
 
 
@@ -199,4 +222,67 @@ CvWidget::_imgToFile(int id, const QString &fName)
     _lbCamCap->setPixmap(QPixmap::fromImage(imgIn.scaledToWidth(360)));
     return result;
 }
+
+int
+CvWidget::_appendCameraCalibrationPlane(Qt::Orientation orient)
+{
+    CVQT_TIMESTAMP();
+
+    QFrame*      frame = new QFrame();
+    QVBoxLayout* loutV = new QVBoxLayout;
+    QLabel*      lbOne = new QLabel("Camera calibration: #"
+                                    + QString::number(_numOfImagePlanes));
+    QLabel*      lbImg = new QLabel("image");
+    QPixmap    pixmap("./imageRgb.png");
+
+    lbImg->setPixmap(pixmap);
+
+    loutV->addWidget(lbOne);
+    loutV->addWidget(lbImg);
+
+    frame->setLayout(loutV);
+    frame->setFrameStyle(QFrame::Panel | QFrame::Raised);
+    frame->setLineWidth(1);
+
+
+    if (Qt::Vertical == orient )
+        _loutMain->addWidget(frame, _numOfImagePlanes, 0);
+    else
+        _loutMain->addWidget(frame, 0, _numOfImagePlanes);
+
+
+    _numOfImagePlanes++;
+    return _numOfImagePlanes;
+}
+
+int
+CvWidget::_appendImageEdgeDetectPlane(Qt::Orientation orient)
+{
+    CVQT_TIMESTAMP();
+
+    QFrame*      frame = new QFrame();
+    QVBoxLayout* loutV = new QVBoxLayout;
+    QLabel*      lbOne = new QLabel("Edge Detection: #"
+                                    + QString::number(_numOfImagePlanes));
+    QLabel*      lbImg = new QLabel("image");
+    QPixmap    pixmap("./imageRgb.png");
+
+    lbImg->setPixmap(pixmap);
+
+    loutV->addWidget(lbOne);
+    loutV->addWidget(lbImg);
+
+    frame->setLayout(loutV);
+    frame->setFrameStyle(QFrame::Panel | QFrame::Raised);
+    frame->setLineWidth(1);
+
+    if (Qt::Vertical == orient )
+        _loutMain->addWidget(frame, _numOfImagePlanes, 0);
+    else
+        _loutMain->addWidget(frame, 0, _numOfImagePlanes);
+
+    _numOfImagePlanes++;
+    return _numOfImagePlanes;
+}
+
 
