@@ -33,7 +33,7 @@ private slots:
 
 private:
     bool                     _appendImageSmoothPlane(Qt::Orientation orient);
-    int                     _appendCameraCalibrationPlane(Qt::Orientation orient);
+    bool                     _appendCameraCalibrationPlane(Qt::Orientation orient);
     bool                     _appendImageEdgeDetectPlane(Qt::Orientation orient);
     bool                    _appendCameraPlane(Qt::Orientation orient);
 
