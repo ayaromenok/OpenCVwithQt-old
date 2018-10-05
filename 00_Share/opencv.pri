@@ -32,6 +32,10 @@ linux:!android {
         message("        arch: i386")
         #LIB += -L$${CVLINUX}/lib32
     }
+    contains(QMAKE_HOST.arch, arm.*){
+        message("        arch: armeabi-v7a")
+        #LIB += -L$${CVLINUX}/lib32
+    }
 }
 
 android {

@@ -32,7 +32,9 @@ private slots:
     bool _imgToFile(int id, const QString &fName);   // workaround for OSX/iOS
 
 private:
-    int                     _appendImagePlane(Qt::Orientation orient);
+    bool                     _appendImageSmoothPlane(Qt::Orientation orient);
+    int                     _appendCameraCalibrationPlane(Qt::Orientation orient);
+    int                     _appendImageEdgeDetectPlane(Qt::Orientation orient);
     bool                    _appendCameraPlane(Qt::Orientation orient);
 
     int                     _numOfImagePlanes;
