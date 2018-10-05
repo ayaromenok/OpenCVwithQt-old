@@ -223,7 +223,7 @@ CvWidget::_imgToFile(int id, const QString &fName)
     return result;
 }
 
-int
+bool
 CvWidget::_appendCameraCalibrationPlane(Qt::Orientation orient)
 {
     CVQT_TIMESTAMP();
@@ -233,7 +233,46 @@ CvWidget::_appendCameraCalibrationPlane(Qt::Orientation orient)
     QLabel*      lbOne = new QLabel("Camera calibration: #"
                                     + QString::number(_numOfImagePlanes));
     QLabel*      lbImg = new QLabel("image");
-    QPixmap    pixmap("./imageRgb.png");
+
+    bool result = false;
+    CvQtPerf pc;
+    QPixmap    pixmap;
+
+    CvRes::imageChecked12x12();
+
+    pc.start();
+    QImage imgInQt("./imageChecked12x12.png");
+    if (!imgInQt.isNull()){
+        cv::Mat imgIn, imgTmpGray;
+        imgIn = CvRes::imageQtToCv(imgInQt);
+        cv::cvtColor(imgIn, imgTmpGray, cv::COLOR_RGBA2GRAY);
+        std::vector<cv::Point2f> corners;
+        cv::Size boardSize(12,12);
+        bool found = cv::findChessboardCorners(imgTmpGray, boardSize, corners);
+        if (found){
+            qDebug() << "found" << corners.size();
+            cv::drawChessboardCorners(imgIn, boardSize, corners, found);
+        }
+        //cv::cvtColor(imgTmpCanny, imgOutCanny, cv::COLOR_GRAY2BGR);
+#ifdef CVQT_DEBUG_HIGHGUI
+     cv::namedWindow("imgTmpGray", cv::WINDOW_AUTOSIZE);
+     cv::imshow("imgTmpGray", imgTmpGray);
+     cv::namedWindow("imgIn", cv::WINDOW_AUTOSIZE);
+     cv::imshow("imgIn", imgIn);
+#endif //CVQT_DEBUG_HIGHGUI
+        QImage imgOutQt;
+        imgOutQt = CvRes::imageCvToQt(imgIn);
+        QPoint center = imgOutQt.rect().center();
+        QMatrix matrix;
+        matrix.translate(center.x(), center.y());
+        matrix.rotate(90);
+        QImage dstImg = imgOutQt.transformed(matrix);
+        result = dstImg.save("./checkedBoardDetect.jpg");
+    }
+    pc.stop();
+
+    pixmap.load("./checkedBoardDetect.jpg");
+
 
     lbImg->setPixmap(pixmap);
 
@@ -252,21 +291,42 @@ CvWidget::_appendCameraCalibrationPlane(Qt::Orientation orient)
 
 
     _numOfImagePlanes++;
-    return _numOfImagePlanes;
+    return result;
 }
 
-int
+bool
 CvWidget::_appendImageEdgeDetectPlane(Qt::Orientation orient)
 {
     CVQT_TIMESTAMP();
+    bool result = false;
+    CvQtPerf pc;
 
     QFrame*      frame = new QFrame();
     QVBoxLayout* loutV = new QVBoxLayout;
     QLabel*      lbOne = new QLabel("Edge Detection: #"
                                     + QString::number(_numOfImagePlanes));
     QLabel*      lbImg = new QLabel("image");
-    QPixmap    pixmap("./imageRgb.png");
 
+
+    pc.start();
+    QImage imgInQt("./imageRgb.png");
+    if (!imgInQt.isNull()){
+        cv::Mat imgIn, imgTmpGray, imgTmpCanny, imgOutCanny;
+        imgIn = CvRes::imageQtToCv(imgInQt);
+        cv::cvtColor(imgIn, imgTmpGray, cv::COLOR_RGBA2GRAY);
+        cv::Canny(imgTmpGray, imgTmpCanny, 10, 100, 3, true);
+        cv::cvtColor(imgTmpCanny, imgOutCanny, cv::COLOR_GRAY2BGR);
+#ifdef CVQT_DEBUG_HIGHGUI
+     cv::namedWindow("imgOutCanny", cv::WINDOW_AUTOSIZE);
+     cv::imshow("imgOutCanny", imgOutCanny);
+#endif //CVQT_DEBUG_HIGHGUI
+        QImage imgOutQt;
+        imgOutQt = CvRes::imageCvToQt(imgOutCanny);
+        result = imgOutQt.save("./edgeDetectCanny.jpg");
+    }
+    pc.stop();
+
+    QPixmap    pixmap("./edgeDetectCanny.jpg");
     lbImg->setPixmap(pixmap);
 
     loutV->addWidget(lbOne);
@@ -282,7 +342,7 @@ CvWidget::_appendImageEdgeDetectPlane(Qt::Orientation orient)
         _loutMain->addWidget(frame, 0, _numOfImagePlanes);
 
     _numOfImagePlanes++;
-    return _numOfImagePlanes;
+    return result;
 }
 
 
