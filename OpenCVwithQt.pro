@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS = 00_Share
+SUBDIRS = 00_SimpleStubs
