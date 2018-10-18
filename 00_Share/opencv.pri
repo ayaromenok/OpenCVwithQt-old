@@ -4,6 +4,8 @@
 #OpenCV SDK places on different platforms
 CVLINUX = /usr/local
 CVANDROID = /opt/cvAndroid/3/sdk/native
+#for BiForst GPU: adb pull /system/vendor/lib/libOpenCv.so
+CVANDROID_BIFROST = /opt/cvAndroid/bifrost
 CVMACX = /usr/local
 CVIOS = /Users/az/sdk/opencv/iOS
 CVWIN = C:\sdk\opencv
@@ -43,11 +45,16 @@ android {
     message("* OpenCV settings for Android.")
     contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
         message("        arch: armeabi-v7a")
+        #official software
         LIBS += -L$${CVANDROID}/libs/armeabi-v7a
         LIBS += -lopencv_java3
+        #BiFost OpenCL accelerated
+        #LIBS += -L$${CVANDROID_BIFROST}/lib
+        #LIBS += -lOpenCv
 
        ANDROID_EXTRA_LIBS = \
            $${CVANDROID}/libs/armeabi-v7a/libopencv_java3.so
+            #BiFost don't need extralibs
     }
 }
 
