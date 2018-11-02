@@ -1,5 +1,14 @@
 # OpenCVwithQt
 
+# Note
+This repo is out-of-date and work will continue as 3 separate repos: 
+- [OpenCVwithQtExamples](https://github.com/ayaromenok/OpenCVwithQtExamples);
+- [OpenCVwithQtData](https://github.com/ayaromenok/OpenCVwithQtData);
+- [OpenCVwithQt](https://github.com/ayaromenok/OpenCVwithQt);
+
+
+
+
 ## Table of contents <a name="toc"></a>
 
     - [Introduction](#intro)
